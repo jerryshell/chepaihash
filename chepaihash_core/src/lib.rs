@@ -1,3 +1,5 @@
+#![no_std]
+
 pub mod rng;
 
 const PROVINCE: &str = "黑吉辽京津晋冀鲁豫蒙沪渝苏浙皖闽湘赣鄂桂琼川贵云藏陕甘宁青新粤";
@@ -21,24 +23,25 @@ impl core::fmt::Display for PlateError {
 
 impl core::error::Error for PlateError {}
 
-pub fn hash(value: &str) -> Result<String, PlateError> {
+pub fn hash(value: &str) -> Result<[char; 8], PlateError> {
     let seed = get_seed_from_string(value);
     let mut rng = rng::LinearCongruentialRng::new(seed);
 
-    let chepai = format!(
-        "{}{}·{}",
-        get_random_char(&mut rng, PROVINCE)?,
-        get_random_char(&mut rng, ALPHABET)?,
-        generate_plate_number(&mut rng)?
-    );
+    let mut chepai = ['\0'; 8];
+    chepai[0] = get_random_char(&mut rng, PROVINCE)?;
+    chepai[1] = get_random_char(&mut rng, ALPHABET)?;
+    chepai[2] = '·';
+    for i in 0..5 {
+        chepai[3 + i] = get_random_char(&mut rng, ALPHANUMERIC)?;
+    }
 
     Ok(chepai)
 }
 
-pub fn get_seed_from_string(value: &str) -> usize {
+fn get_seed_from_string(value: &str) -> usize {
     let mut seed = 0usize;
     for c in value.chars() {
-        seed = seed.wrapping_mul(31_usize).wrapping_add(c as usize);
+        seed = seed.wrapping_mul(31usize).wrapping_add(c as usize);
     }
     seed
 }
@@ -46,8 +49,4 @@ pub fn get_seed_from_string(value: &str) -> usize {
 fn get_random_char(rng: &mut rng::LinearCongruentialRng, chars: &str) -> Result<char, PlateError> {
     let index = rng.next().ok_or(PlateError::RandomGeneration)? % chars.chars().count();
     chars.chars().nth(index).ok_or(PlateError::IndexOutOfBounds)
-}
-
-fn generate_plate_number(rng: &mut rng::LinearCongruentialRng) -> Result<String, PlateError> {
-    (0..5).map(|_| get_random_char(rng, ALPHANUMERIC)).collect()
 }

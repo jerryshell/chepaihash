@@ -9,8 +9,8 @@ cargo install --locked --git https://github.com/jerryshell/chepaihash
 ```
 
 ```bash
-chepaihash hello
-# 川A·H2XAP
+chepaihash helloworld
+# 赣Y·H45YP
 ```
 
 ## 作为 Lib 使用
@@ -25,10 +25,10 @@ chepaihash_core = { git = "https://github.com/jerryshell/chepaihash" }
 2. `main.rs`
 
 ```rust
-let my_str = "hello";
-let chepai = chepaihash_core::hash(my_str)?;
-println!("{}", chepai);
-// 川A·H2XAP
+let chepai = chepaihash_core::hash("helloworld")?;
+let chepai_str = chepai.iter().collect::<String>();
+println!("{}", chepai_str);
+// 赣Y·H45YP
 ```
 
 ## 为什么
@@ -42,4 +42,4 @@ println!("{}", chepai);
 
 ## 开源协议
 
-[MIT License](LICENSE)
+[MIT](LICENSE)
