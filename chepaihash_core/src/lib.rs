@@ -24,7 +24,10 @@ impl core::fmt::Display for PlateError {
 impl core::error::Error for PlateError {}
 
 pub fn hash(value: &str) -> Result<[char; 8], PlateError> {
-    let seed = get_seed_from_string(value);
+    let seed = value.chars().fold(0usize, |acc, c| {
+        acc.wrapping_mul(31usize).wrapping_add(c as usize)
+    });
+
     let mut rng = rng::LinearCongruentialRng::new(seed);
 
     let mut chepai = ['\0'; 8];
@@ -36,14 +39,6 @@ pub fn hash(value: &str) -> Result<[char; 8], PlateError> {
     }
 
     Ok(chepai)
-}
-
-fn get_seed_from_string(value: &str) -> usize {
-    let mut seed = 0usize;
-    for c in value.chars() {
-        seed = seed.wrapping_mul(31usize).wrapping_add(c as usize);
-    }
-    seed
 }
 
 fn get_random_char(rng: &mut rng::LinearCongruentialRng, chars: &str) -> Result<char, PlateError> {
