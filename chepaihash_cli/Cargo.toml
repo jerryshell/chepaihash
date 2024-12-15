@@ -1,0 +1,11 @@
+[package]
+name = "chepaihash_cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chepaihash_core = { path = "../chepaihash_core" }
+
+[[bin]]
+name = "chepaihash"
+path = "src/main.rs"
