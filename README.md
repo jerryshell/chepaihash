@@ -1,6 +1,6 @@
 # ChepaiHash
 
-_ChepaiHash_ 是一个将字符串转换为中国车牌号的哈希工具
+_ChepaiHash_ 是一个将数据转换为中国车牌号的哈希工具
 
 ## 作为 Cli 使用
 
@@ -13,7 +13,7 @@ chepaihash helloworld
 # 赣Y·H45YP
 ```
 
-## 作为 Lib 使用
+## 作为 Lib 使用（no_std）
 
 1. `Cargo.toml`
 
@@ -25,7 +25,8 @@ chepaihash_core = { git = "https://github.com/jerryshell/chepaihash" }
 2. `main.rs`
 
 ```rust
-let chepai = chepaihash_core::hash("helloworld")?;
+let data = "helloworld".as_bytes();
+let chepai = chepaihash_core::hash(data)?;
 let chepai_str = chepai.iter().collect::<String>();
 println!("{}", chepai_str);
 // 赣Y·H45YP

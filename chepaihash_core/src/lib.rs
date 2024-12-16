@@ -7,9 +7,9 @@ const PROVINCE: &str = "黑吉辽京津晋冀鲁豫蒙沪渝苏浙皖闽湘赣�
 const ALPHABET: &str = "ABCDEFGHJKLMNPQRSTUVWXYZ";
 const ALPHANUMERIC: &str = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789";
 
-pub fn hash(value: &str) -> Result<[char; 8], error::PlateError> {
-    let seed = value.chars().fold(0usize, |acc, c| {
-        acc.wrapping_mul(31usize).wrapping_add(c as usize)
+pub fn hash(data: &[u8]) -> Result<[char; 8], error::PlateError> {
+    let seed = data.iter().fold(0usize, |acc, x| {
+        acc.wrapping_mul(31usize).wrapping_add(*x as usize)
     });
 
     let mut rng = rng::LinearCongruentialRng::new(seed);
