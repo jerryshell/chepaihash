@@ -5,7 +5,7 @@ _ChepaiHash_ 是一个将字符串转换为中国车牌号的哈希工具
 ## 作为 Cli 使用
 
 ```bash
-cargo install --locked --git https://github.com/jerryshell/chepaihash
+go install github.com/jerryshell/chepaihash
 ```
 
 ```bash
@@ -15,20 +15,29 @@ chepaihash helloworld
 
 ## 作为 Lib 使用
 
-1. `Cargo.toml`
+1. `go.mod`
 
-```toml
-[dependencies]
-chepaihash_core = { git = "https://github.com/jerryshell/chepaihash" }
+```go
+module github.com/jerryshell/chepaihash
+
+go 1.16
 ```
 
-2. `main.rs`
+2. `main.go`
 
-```rust
-let chepai = chepaihash_core::hash("helloworld")?;
-let chepai_str = chepai.iter().collect::<String>();
-println!("{}", chepai_str);
-// 赣Y·H45YP
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/jerryshell/chepaihash"
+)
+
+func main() {
+	chepai := chepaihash.Hash("helloworld")
+	fmt.Println(chepai)
+	// 赣Y·H45YP
+}
 ```
 
 ## 为什么

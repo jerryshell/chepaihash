@@ -1,9 +1,0 @@
-[workspace]
-resolver = "2"
-members = ["chepaihash_cli", "chepaihash_core"]
-
-[profile.release]
-lto = true
-strip = true
-panic = "abort"
-codegen-units = 1
