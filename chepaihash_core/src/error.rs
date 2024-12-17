@@ -1,16 +1,16 @@
 #[derive(Debug)]
-pub enum PlateError {
+pub enum ChepaiError {
     RandomGeneration,
     IndexOutOfBounds,
 }
 
-impl core::fmt::Display for PlateError {
+impl core::fmt::Display for ChepaiError {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
         match self {
-            PlateError::RandomGeneration => write!(f, "随机数生成失败"),
-            PlateError::IndexOutOfBounds => write!(f, "字符索引越界"),
+            ChepaiError::RandomGeneration => write!(f, "随机数生成失败"),
+            ChepaiError::IndexOutOfBounds => write!(f, "字符索引越界"),
         }
     }
 }
 
-impl core::error::Error for PlateError {}
+impl core::error::Error for ChepaiError {}

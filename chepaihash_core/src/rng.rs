@@ -2,17 +2,17 @@ const DEFAULT_SEED: usize = 996;
 const LCG_A: usize = 6364136223846793005;
 const LCG_C: usize = 1;
 
-pub struct LinearCongruentialRng {
+pub struct LinearCongruentialGenerator {
     pub seed: usize,
 }
 
-impl Default for LinearCongruentialRng {
+impl Default for LinearCongruentialGenerator {
     fn default() -> Self {
         Self { seed: DEFAULT_SEED }
     }
 }
 
-impl Iterator for LinearCongruentialRng {
+impl Iterator for LinearCongruentialGenerator {
     type Item = usize;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -21,7 +21,7 @@ impl Iterator for LinearCongruentialRng {
     }
 }
 
-impl LinearCongruentialRng {
+impl LinearCongruentialGenerator {
     pub fn new(seed: usize) -> Self {
         Self { seed }
     }
